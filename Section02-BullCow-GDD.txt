@@ -1,0 +1,117 @@
+Section02-BullCow-GDD.txt 0.0.1       UTF-8                         2016-12-18
+
+         <\\Astraendo2\D\giocchi\Udemy-UnrealEngineDeveloper\Section01
+                      \Section01-BullCow-GDD.txt>
+
+                   BULLCOW COMMAND-LINE GAME DESIGN DOCUMENT
+                   =========================================
+
+    This is the command-line game that is used as an Introduction to C++ in
+    the Udemy "Unreal Engine Developer Course: Learn C++ & Make Games" at
+    <https://www.udemy.com/unrealcourse>.  The Game Design Document (GDD)
+    development arises at Section 02, Lecture 11.
+    
+    This document is to be maintained.  It is expected that the narrative
+    of this document will be worked into the code structure itself.
+    
+1. THE PROBLEM
+
+   Provide a mental challenge for the player.
+   
+   Have it work for youngsters and adults who have learned to read and spell
+   English.
+   
+2. CONCEPTS AND RULES
+   See <https://en.wikipedia.org/wiki/Bulls_and_Cows>
+
+   The program chooses an English isogram word, one that has no repeating 
+   letters.  Examples are "rules", "tough", "begin", "trowel", "burglar",
+   "cough", "counsel", "cuneiform", "human", "computer", "software", "isogram",
+   and many more.  The most popular form uses 4-letter words.
+   
+   The player is asked to enter a guess for what the n-letter word is.
+   
+   The program reports the number of Bulls, letters in the right place, 
+   possibly 0.
+   
+   The program reports the number of Cows, letters in the word but not in
+   the right place, also possibly 0.
+   
+   If the word has not been guessed yet, the player is allowed another guess
+   until the limit on guesses is reached.
+   
+3. FUNCTIONAL REQUIREMENTS 
+
+   
+   Accomplish it with a simple command-line program using text input-output.
+   
+   Start with the simplest console application that demonstrates game play.
+   
+   INPUTS  
+   
+     * The program has a list of at least one word that can be chosen from. 
+     
+     * Keyboard input is text in response to promtps from the computer.  
+       Only the 26 letters A ... Z are accepted and case does not matter.
+       
+   OUTPUTS
+   
+     * All output is in text lines.
+     
+   USER INTERACTIONS
+   
+     * For each play, the computer randomly chooses one of its words.
+   
+     * The user will be told how many letters there are in the word to guess.
+     
+     * The user will be asked to submit a guess.
+     
+     * If the guess is not an isogram of the correct length, 
+       the user will be asked to try again.
+     
+     * If the guess is an isogram the user will be told the number of Bulls
+       and Cows.
+       
+     * If the word has not been guessed yet, and the limit of guesses has not
+       been reached, the user is invited to make another guess.
+       
+     * If the word has been found (n Bulls), the user is congratulated.
+     
+     * If the limit on guesses has been reached, the user is commiserated with
+       and told what the word is.
+       
+     * For either outcome, the user is offered the choice of guessing another
+       word.
+       
+   ASSETS
+   
+     No assets are required beyond an initial list of words (or a single word)
+     
+4. ARCHITECTURE
+
+   We are going to do bottom-up spiral construction since this is an easy
+   problem.
+     
+4. POSSIBLE FUTURE IDEAS
+
+   Use list of more than one word
+   
+   Let the user choose the maximum length of hidden word to be offered.
+   
+   Minimize the odds of a word being repeated.
+   
+   Provide a way to create the word list, shuffle it, and work randomly
+   through it.
+   
+   
+       
+ 
+   
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 0.0.2 2016-12-18-15:01 Duh. This is for Section02, not Section01.
+ 0.0.1 2016-12-18-14:55 First Draft kept in the folder on this course Section
+       for reference and refinement.
+
+
+                     *** end of Section02-BullCow-GDD.txt ***        
