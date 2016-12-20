@@ -2,15 +2,32 @@
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
+#include <string>
+
+using namespace std;
+
+const int WordSize = 5;
 
 int main() 
-{   /* Skeleton to demonstrate successful build and operation */
+{   
+    // INTRODUCE THE GAME
+    cout
+        << "Welcome to Bulls and Cows, a fun word game.\n"
+        << "Guess a secret word having " << WordSize << " letters,"
+        << " all different.\n";
 
-    std::cout << "Welcome to the Holiday Camp with Bulls and Cows\n"
-                 "and games to play.\n\n";
+    // GET A GUESS FROM THE PLAYER
+    string Guess = "";
+    cout << "\n Your guess? ";
+    getline(cin, Guess);
 
-    std::cout << "Press Enter to quit\n";
-    std::cin.ignore();
+    // REPEAT THE GUESS BACK TO THEM
+    cout << "\nYou guessed: " << Guess << endl;
+
+
+    // compensate for using different Project template for this code:
+    cout << "\nPress Enter to quit\n";
+    cin.ignore();
 
     return 0;
 }
@@ -18,13 +35,14 @@ int main()
 /* TODO:
      * Make a README.md for the GitHub folks
      * Build the skeleton using explicit name qualification for now.
-     * Create a shortcut file in the project for launching the program
-       in a Windows command shell window that does not close automatically,
-       working around a problem when General > Empty Project is used.
+     * Consider letting the student choose the maximum number of letters,
+       based on what there is in a directory of word choices.
      /
 
 
-/* 0.0.2 2016-12-19-10:14 Initial Build success.  Added hack to wait for
+/* 0.0.3 2016-12-19-21:42 Lesson 17 alignment.  Using different nomenclature
+         and WordSize spelling.  Got getline working.
+   0.0.2 2016-12-19-10:14 Initial Build success.  Added hack to wait for
          input so console shell does not exit automatically.
    0.0.1 2016-12-19-09:50 Added Section02 Project to GitHub for Windows
          The solution, with the default .gitignore, is published to my
