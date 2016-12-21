@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.5              UTF-8                       2016-12-20 */
+/* BlueCowGame.cpp 0.0.8              UTF-8                       2016-12-21 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
@@ -15,15 +15,11 @@ bool SaysToPlayAgain();
 
 int main() 
 {
-    do  {
+    do  
+    {
          IntroduceGame();
          PlayGame();
-        } while(SaysToPlayAgain())
- 
-
-    // compensate for using different Project template for this code:
-    cout << "\nPress Enter to quit\n";
-    cin.ignore();
+    } while (SaysToPlayAgain());
 
     return 0;
 }
@@ -32,9 +28,10 @@ int main()
 void IntroduceGame()
 {
     cout
-        << "Welcome to Bulls and Cows, a fun word game.\n"
-        << "Guess a secret word having " << WordSize << " letters,"
-        << " all different.\n";
+        << "\nWelcome to Bulls and Cows, a fun word game.\n"
+           "Guess a secret word having " 
+        << WordSize 
+        << " letters, all different.\n";
     return;
 }
 
@@ -75,8 +72,6 @@ string GetWellFormedGuess()
     /* The guess must have the correct number of letters without
        duplicates.  It might be checked against a word list, but not now.
        If the user chooses not to enter a guess, we return an empty string.
-       Another way would be to return a different string that is impossible
-       to have entered.
        */
 
     string Guess = "";
@@ -84,14 +79,20 @@ string GetWellFormedGuess()
     getline(cin, Guess);
 
 
-    /*  I would
-    like it all on one line somehow, so guesses and Bulls+Cows are
-    in an easy-to-use column.
-    This changes the abstraction and coupling between getting a guess
-    and reporting its strength.
+    /*  I want the input-output to line up in a way where it is easy for the
+        player to see what is happening.  There is some coupling between
+        this and the responses to well-formed words of the correct length
+        that happen elsewhere.  My goal is to have clear columnns where
+        the user can easily review the previous well-formed guesses and
+        consider how to craft additional guesses.
+           One way might be to have the output messages be from a single
+        (static) class where the alignments and such are easily reviewed
+        in one place.  That would also allow for internationalization,
+        I suppose.  (NOT NOW)
     */
-    /* TODO: Failing verification of the input should not lead to a
-    return.  We don't want it to count as a try until a
+
+    /* TODO: Failing verification of the input should not lead to
+    return of a Guess.  We don't want it to count as a try until a
     good try is returned, so that will be handled in the
     bounded loop, once we know how to limit guesses based
     on word size.
@@ -112,7 +113,13 @@ string GetWellFormedGuess()
      /
 
 
-/* 0.0.5 2016-12-20-15:42 Through Lesson 22 now.  The main skeleton is now
+/* 0.0.8 2016-12-21-11:29 Abandoning stdio-dialog experiment.  I started a branch
+         to see if I could do character level input-output, in versions 0.0.6-.7.
+         Because fgetc echoes the characters, this does not give the necessary
+         control.  I will continue with <iostream> and line input, finding an
+         alternative way to keep things lined up for the player to review
+         easily.  This version continues from 0.0.5 with edited adjustments.
+   0.0.5 2016-12-20-15:42 Through Lesson 22 now.  The main skeleton is now
          mostly complete.  I will want to change the input-output to get
          each guess and the assessment on a single line.  It will be interesting
          if the abstraction levels can get this to work.
