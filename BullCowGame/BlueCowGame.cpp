@@ -1,54 +1,90 @@
-/* BlueCowGame.cpp 0.0.5              UTF-8                       2016-12-20 */
+/* BlueCowGame.cpp 0.0.6              UTF-8                       2016-12-20 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include <string>
 
 using namespace std;
 
-const int WordSize = 5;
+const int WORD_SIZE = 5;
+const int MAX_WORD_SIZE = 10;
 
-void IntroduceGame();
-void PlayGame();
+void IntroduceGame(int WordSize);
+void PlayGame(int WordSize);
 bool SaysToPlayAgain();
+void SayGoodbye();
 
 
 int main() 
 {
-    do  {
-         IntroduceGame();
-         PlayGame();
-        } while(SaysToPlayAgain())
+    do  
+    {
+         IntroduceGame(WORD_SIZE);
+         PlayGame(WORD_SIZE);
+    } while (SaysToPlayAgain());
  
-
-    // compensate for using different Project template for this code:
-    cout << "\nPress Enter to quit\n";
-    cin.ignore();
-
+    SayGoodbye();
     return 0;
 }
 
 /* INTRODUCE THE GAME */
-void IntroduceGame()
+void IntroduceGame(int WordSize)
 {
-    cout
-        << "Welcome to Bulls and Cows, a fun word game.\n"
-        << "Guess a secret word having " << WordSize << " letters,"
-        << " all different.\n";
+    fputs("Welcome to Bulls and Cows, a fun word game.\n"
+          "Guess a secret word having ", stdout);
+    char buffer[10];
+    _itoa_s(WordSize, buffer, 9);
+    fputs(buffer, stdout);
+    fputs(" letters, all different.\n", stdout);
     return;
 }
 
+
+// DETERMINE USER WANTS TO PLAY SOME MORE
+bool SaysToPlayAgain()
+{
+    fputs("\nDo you want to Play again (y/N)? ", stdout);
+
+    char Response = (char) fgetc(stdin);
+
+    char read = Response;
+    while (read != '\n' && feof(stdin) == 0)
+    {   // consume any additional characters up to EOL
+        read = (char)fgetc(stdin);
+    }
+
+    fputc('\n', stdout);
+
+    return (Response == 'y' || Response == 'Y');
+}
+
+
+// SAY GOODBYE
+void SayGoodbye()
+{
+    fputs("\n", stdout);
+    // TODO: provide more later when we have something more to say.
+    return;
+}
+
+
 // PLAY A GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
 
-string GetWellFormedGuess();
+string GetWellFormedGuess(int WordSize);
 
-void PlayGame()
+void PlayGame(int WordSize)
 {
     const int MaxTries = 5;
+    /* TODO: determine from word information and let the
+    user know the threshhold
+    */
 
     for (int tries = 1; tries <= MaxTries; tries++)
     {
-        string Guess = GetWellFormedGuess();
+        string Guess = GetWellFormedGuess(WordSize);
 
         // Here is where we actually need to check the Guess
 
@@ -59,18 +95,8 @@ void PlayGame()
 }
 
 
-// DETERMINE USER WANTS TO PLAY SOME MORE
-bool SaysToPlayAgain()
-{
-    cout << "Do you want to Play again (y/N)? ";
-    string Response = "";
-    getline(cin, Response);
-    return (Response[0] == 'y' || Response[0] == 'Y');
-}
-
-
 // GET A PROPER GUESS FROM THE PLAYER
-string GetWellFormedGuess()
+string GetWellFormedGuess(int WordSize)
 {
     /* The guess must have the correct number of letters without
        duplicates.  It might be checked against a word list, but not now.
@@ -79,9 +105,25 @@ string GetWellFormedGuess()
        to have entered.
        */
 
-    string Guess = "";
-    cout << "\n Your guess? ";
-    getline(cin, Guess);
+    char Guess[MAX_WORD_SIZE + 1] = { 0 };
+
+    fputs("\n Your guess? ", stdout);
+    for (int i = 0; i < WordSize; i++)
+    {
+        while (1)
+        {
+            Guess[i] = tolower((char)fgetc(stdin));
+            if (isalpha(Guess[i])) break;
+            if (Guess[i] == '\0x08')
+               {// backspace character
+                i = (i > 0 ? i-1 : 0);
+                Guess[i] = 0;
+                continue;
+               }
+            /* else if (!isalpha(Guess[i]) */          
+        }
+    }
+    
 
 
     /*  I would
@@ -97,7 +139,7 @@ string GetWellFormedGuess()
     on word size.
     */
 
-    return Guess;
+    return string(Guess);
 }
 
 
@@ -109,10 +151,15 @@ string GetWellFormedGuess()
      * NOT DOING NOW: A big hashtable dictionary which is randomly probed to
        get qualifying words.  I bet I can use the hash algorithm from Adv10.
        Then I need to get/make a dictionary of isograms.
+     * Maybe say goodbye, provide information on the success, performance, etc.
+     * Then do we need a startup also?
      /
 
 
-/* 0.0.5 2016-12-20-15:42 Through Lesson 22 now.  The main skeleton is now
+/* 0.0.6 2016-12-20-20:18 Switch to stdio input/output in preparation for
+         making a single-line arrangement.  Experiment with fgetc entry and
+         controlling echo.
+   0.0.5 2016-12-20-15:42 Through Lesson 22 now.  The main skeleton is now
          mostly complete.  I will want to change the input-output to get
          each guess and the assessment on a single line.  It will be interesting
          if the abstraction levels can get this to work.
