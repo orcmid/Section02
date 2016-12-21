@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.4              UTF-8                       2016-12-20 */
+/* BlueCowGame.cpp 0.0.5              UTF-8                       2016-12-20 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
@@ -8,16 +8,18 @@ using namespace std;
 
 const int WordSize = 5;
 
-
-
 void IntroduceGame();
-string GetValidGuess();
+void PlayGame();
+bool SaysToPlayAgain();
+
 
 int main() 
 {
-    IntroduceGame();
-
-    string Guess = GetValidGuess();
+    do  {
+         IntroduceGame();
+         PlayGame();
+        } while(SaysToPlayAgain())
+ 
 
     // compensate for using different Project template for this code:
     cout << "\nPress Enter to quit\n";
@@ -36,38 +38,68 @@ void IntroduceGame()
     return;
 }
 
-// GET A PROPER GUESS FROM THE PLAYER
-   /* The guess must have the correct number of letters without
-      duplicates.  It might be checked against a word list, but not now. 
-      If the user chooses not to enter a guess, we return an empty string.
-      Another way would be to return a different string that is impossible
-      to have entered. 
-      */
+// PLAY A GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
 
-string GetValidGuess()
+string GetWellFormedGuess();
+
+void PlayGame()
 {
+    const int MaxTries = 5;
+
+    for (int tries = 1; tries <= MaxTries; tries++)
+    {
+        string Guess = GetWellFormedGuess();
+
+        // Here is where we actually need to check the Guess
+
+    }
+
+    return;
+
+}
+
+
+// DETERMINE USER WANTS TO PLAY SOME MORE
+bool SaysToPlayAgain()
+{
+    cout << "Do you want to Play again (y/N)? ";
+    string Response = "";
+    getline(cin, Response);
+    return (Response[0] == 'y' || Response[0] == 'Y');
+}
+
+
+// GET A PROPER GUESS FROM THE PLAYER
+string GetWellFormedGuess()
+{
+    /* The guess must have the correct number of letters without
+       duplicates.  It might be checked against a word list, but not now.
+       If the user chooses not to enter a guess, we return an empty string.
+       Another way would be to return a different string that is impossible
+       to have entered.
+       */
+
     string Guess = "";
     cout << "\n Your guess? ";
     getline(cin, Guess);
-        // verification and whether to quit or not needed here.
-    cout << "\nYou guessed: " << Guess << endl;
 
-        /* We don't need this, but it is not clear whether
-           the checking can be here or has to follow.  I would
-           like it all on one line somehow, so guesses and Bulls+Cows are
-           in an easy-to-use column.
-           This changes the abstraction and coupling between getting a guess
-           and reporting its strength.
-           */
-        /* TODO: Failing verification of the input should not lead to a
-                 return.  We don't want it to count as a try until a 
-                 good try is returned, so that will be handled in the
-                 bounded loop, once we know how to limit guesses based
-                 on word size. 
-                 */
+
+    /*  I would
+    like it all on one line somehow, so guesses and Bulls+Cows are
+    in an easy-to-use column.
+    This changes the abstraction and coupling between getting a guess
+    and reporting its strength.
+    */
+    /* TODO: Failing verification of the input should not lead to a
+    return.  We don't want it to count as a try until a
+    good try is returned, so that will be handled in the
+    bounded loop, once we know how to limit guesses based
+    on word size.
+    */
 
     return Guess;
 }
+
 
 
 /* TODO:
@@ -80,7 +112,11 @@ string GetValidGuess()
      /
 
 
-/* 0.0.4 2016-12-20-13:53 Lesson 18 alignment, with many notes.  I am 
+/* 0.0.5 2016-12-20-15:42 Through Lesson 22 now.  The main skeleton is now
+         mostly complete.  I will want to change the input-output to get
+         each guess and the assessment on a single line.  It will be interesting
+         if the abstraction levels can get this to work.
+   0.0.4 2016-12-20-13:53 Lesson 18 alignment, with many notes.  I am 
          deviating, but not by much.
    0.0.3 2016-12-19-21:42 Lesson 17 alignment.  Using different nomenclature
          and WordSize spelling.  Got getline working.
