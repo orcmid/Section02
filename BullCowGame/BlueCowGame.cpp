@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.6              UTF-8                       2016-12-20 */
+/* BlueCowGame.cpp 0.0.7              UTF-8                       2016-12-21 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
@@ -112,7 +112,7 @@ string GetWellFormedGuess(int WordSize)
     {
         while (1)
         {
-            Guess[i] = tolower((char)fgetc(stdin));
+            Guess[i] = (char) tolower((char)fgetc(stdin));
             if (isalpha(Guess[i])) break;
             if (Guess[i] == '\0x08')
                {// backspace character
@@ -156,7 +156,13 @@ string GetWellFormedGuess(int WordSize)
      /
 
 
-/* 0.0.6 2016-12-20-20:18 Switch to stdio input/output in preparation for
+/* 0.0.7 2016-12-21-11:09 Abandon this branch.  Since there is no way to have
+         fgets not echo, the problems about backspacing, line ending, etc.
+         is too much to attempt here.  I will design an interaction using
+         line input that still has a clean output as well as confirmation
+         of the input with any errors there might be.
+            The master will be jumped up to 0.0.8 though.
+   0.0.6 2016-12-20-20:18 Switch to stdio input/output in preparation for
          making a single-line arrangement.  Experiment with fgetc entry and
          controlling echo.
    0.0.5 2016-12-20-15:42 Through Lesson 22 now.  The main skeleton is now
