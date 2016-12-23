@@ -1,10 +1,8 @@
-/* BlueCowGame.cpp 0.0.8              UTF-8                       2016-12-21 */
+/* BlueCowGame.cpp 0.0.9              UTF-8                       2016-12-** */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
 #include <string>
-
-using namespace std;
 
 const int WordSize = 5;
 
@@ -27,7 +25,7 @@ int main()
 /* INTRODUCE THE GAME */
 void IntroduceGame()
 {
-    cout
+    std::cout
         << "\nWelcome to Bulls and Cows, a fun word game.\n"
            "Guess a secret word having " 
         << WordSize 
@@ -37,7 +35,7 @@ void IntroduceGame()
 
 // PLAY A GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
 
-string GetWellFormedGuess();
+std::string GetWellFormedGuess();
 
 void PlayGame()
 {
@@ -45,7 +43,7 @@ void PlayGame()
 
     for (int tries = 1; tries <= MaxTries; tries++)
     {
-        string Guess = GetWellFormedGuess();
+        std::string Guess = GetWellFormedGuess();
 
         // Here is where we actually need to check the Guess
 
@@ -59,24 +57,24 @@ void PlayGame()
 // DETERMINE USER WANTS TO PLAY SOME MORE
 bool SaysToPlayAgain()
 {
-    cout << "Do you want to Play again (y/N)? ";
-    string Response = "";
-    getline(cin, Response);
+    std::cout << "Do you want to Play again (y/N)? ";
+    std::string Response = "";
+    std::getline(std::cin, Response);
     return (Response[0] == 'y' || Response[0] == 'Y');
 }
 
 
 // GET A PROPER GUESS FROM THE PLAYER
-string GetWellFormedGuess()
+std::string GetWellFormedGuess()
 {
     /* The guess must have the correct number of letters without
        duplicates.  It might be checked against a word list, but not now.
        If the user chooses not to enter a guess, we return an empty string.
        */
 
-    string Guess = "";
-    cout << "\n Your guess? ";
-    getline(cin, Guess);
+    std::string Guess = "";
+    std::cout << "\n Your guess? ";
+    std::getline(std::cin, Guess);
 
 
     /*  I want the input-output to line up in a way where it is easy for the
@@ -113,7 +111,8 @@ string GetWellFormedGuess()
      /
 
 
-/* 0.0.8 2016-12-21-11:29 Abandoning stdio-dialog experiment.  I started a branch
+/* 0.0.9 2016-12-**-**:** Eliminate "using namespace" 
+   0.0.8 2016-12-21-11:29 Abandoning stdio-dialog experiment.  I started a branch
          to see if I could do character level input-output, in versions 0.0.6-.7.
          Because fgetc echoes the characters, this does not give the necessary
          control.  I will continue with <iostream> and line input, finding an
