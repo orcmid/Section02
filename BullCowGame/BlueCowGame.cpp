@@ -1,57 +1,42 @@
-/* BlueCowGame.cpp 0.0.9              UTF-8                       2016-12-** */
+/* BlueCowGame.cpp 0.0.10             UTF-8                       2016-12-23 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
 #include <string>
 
-const int WordSize = 5;
+#include "FBullCowGame.hpp"
 
-void IntroduceGame();
-void PlayGame();
+void IntroduceGame(FBullCowGame NewGame);
+void PlayGame(FBullCowGame CurrentGame);
 bool SaysToPlayAgain();
 
 
 int main() 
-{
+{   //TODO: Announce the program in some handy way.
     do  
     {
-         IntroduceGame();
-         PlayGame();
+        FBullCowGame PlayerGame("isogram"); 
+            // TODO: Eventually randomized choice
+            // TODO: Protect against improper SecretWord
+         IntroduceGame(PlayerGame);
+         PlayGame(PlayerGame);
     } while (SaysToPlayAgain());
 
     return 0;
 }
 
 /* INTRODUCE THE GAME */
-void IntroduceGame()
+void IntroduceGame(FBullCowGame NewGame)
 {
     std::cout
         << "\nWelcome to Bulls and Cows, a fun word game.\n"
-           "Guess a secret word having " 
-        << WordSize 
+        "Guess a secret word having "
+        << NewGame.WordSize()
         << " letters, all different.\n";
+    // TODO: Also indicate the number of tries allowed.
     return;
 }
 
-// PLAY A GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
-
-std::string GetWellFormedGuess();
-
-void PlayGame()
-{
-    const int MaxTries = 5;
-
-    for (int tries = 1; tries <= MaxTries; tries++)
-    {
-        std::string Guess = GetWellFormedGuess();
-
-        // Here is where we actually need to check the Guess
-
-    }
-
-    return;
-
-}
 
 
 // DETERMINE USER WANTS TO PLAY SOME MORE
@@ -64,42 +49,100 @@ bool SaysToPlayAgain()
 }
 
 
-// GET A PROPER GUESS FROM THE PLAYER
-std::string GetWellFormedGuess()
+// PLAY A GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
+
+
+
+void PlayGame(FBullCowGame CurrentGame)
 {
-    /* The guess must have the correct number of letters without
-       duplicates.  It might be checked against a word list, but not now.
-       If the user chooses not to enter a guess, we return an empty string.
-       */
+    std::string WordSpace = " ";
+    for (unsigned i = 0; i < CurrentGame.WordSize(); i++)
+        WordSpace += " ";
+    
+    while (1)
+    {
+        std::cout << std::endl;
+        std::cout << " Your guess? ";
 
-    std::string Guess = "";
-    std::cout << "\n Your guess? ";
-    std::getline(std::cin, Guess);
+        do
+        {
+            std::string Guess = "";
+            std::getline(std::cin, Guess);
 
+            if (Guess.length() == 0)
+            {   //           " Your guess? "
+                std::cout << " Giving up after " << CurrentGame.WellFormedTries();
+                if (CurrentGame.WellFormedTries() == 1)
+                    std::cout << " guess.\n\n";
+                else std::cout << " guesses.\n\n";
 
-    /*  I want the input-output to line up in a way where it is easy for the
-        player to see what is happening.  There is some coupling between
-        this and the responses to well-formed words of the correct length
-        that happen elsewhere.  My goal is to have clear columnns where
-        the user can easily review the previous well-formed guesses and
-        consider how to craft additional guesses.
-           One way might be to have the output messages be from a single
-        (static) class where the alignments and such are easily reviewed
-        in one place.  That would also allow for internationalization,
-        I suppose.  (NOT NOW)
-    */
+                return;
+            }
 
-    /* TODO: Failing verification of the input should not lead to
-    return of a Guess.  We don't want it to count as a try until a
-    good try is returned, so that will be handled in the
-    bounded loop, once we know how to limit guesses based
-    on word size.
-    */
+            CurrentGame.SetGuess(Guess);
 
-    return Guess;
+            if (!CurrentGame.IsOnlyLetters())
+            {   //           " Your guess? "
+                std::cout << "             Use exactly "
+                    << CurrentGame.WordSize()
+                    << " different alphabetical letters.\n"
+                    << "  Try again: ";
+                continue;
+            }
+
+            if (!CurrentGame.IsCorrectLength())
+            {   //           " Your guess? "
+                std::cout << "             Use exactly "
+                    << CurrentGame.WordSize() << " different letters.\n"
+                    << "  Try again: ";
+                continue;
+            }
+
+            if (!CurrentGame.IsGoodIsogram())
+            {   //           " Your guess? "
+                std::cout << "             The letters must be all different.\n"
+                    << "  Try again: ";
+                continue;
+            }
+            else
+            {
+                //           " Your guess? "
+                std::cout << "             " << WordSpace
+                    << "Bulls: " << CurrentGame.Bulls()
+                    << " Cows: " << CurrentGame.Cows() << std::endl;
+            }
+
+            if (CurrentGame.IsSecretGuessed())
+            {
+                //           " Your guess? "
+                std::cout << " CONGRATULATIONS! You got it in "
+                    << CurrentGame.WellFormedTries();
+
+                if (CurrentGame.WellFormedTries() == 1)
+                    std::cout << " guess.\n\n";
+                else std::cout << " guesses.\n\n";
+
+                return;
+            }
+
+            if (CurrentGame.SuggestedMaxTries() <= CurrentGame.WellFormedTries())
+            {
+                //           " Your guess? "
+                std::cout << "      SORRY! " << WordSpace
+                    << "You exhausted your "
+                    << CurrentGame.SuggestedMaxTries()
+                    << "-guess allowance.\n\n";
+
+                return;
+            }
+
+        } while (!CurrentGame.IsGoodIsogram());
+
+    }
+
 }
 
-
+/* ------1---------2---------3---------4---------5---------6---------7------ */
 
 /* TODO:
      * Make a README.md for the GitHub folks
@@ -111,7 +154,9 @@ std::string GetWellFormedGuess()
      /
 
 
-/* 0.0.9 2016-12-**-**:** Eliminate "using namespace" 
+/* 0.0.10 2016-12-23-19:29 Get complete game, crying for refactoring.
+   0.0.9 2016-12-23-11:52 Eliminate "using namespace", integrate the FBullCowGame
+         class and introduce it in place of the previous use of strings.
    0.0.8 2016-12-21-11:29 Abandoning stdio-dialog experiment.  I started a branch
          to see if I could do character level input-output, in versions 0.0.6-.7.
          Because fgetc echoes the characters, this does not give the necessary
