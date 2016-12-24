@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.11             UTF-8                       2016-12-24 */
+/* BlueCowGame.cpp 0.0.12             UTF-8                       2016-12-24 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
@@ -34,6 +34,7 @@ void IntroduceGame(FBullCowGame NewGame)
         << NewGame.WordSize()
         << " letters, all different.\n";
     // TODO: Also indicate the number of tries allowed.
+    // TODO: Split Welcome to the program from each game starting.
     return;
 }
 
@@ -107,9 +108,12 @@ void PlayGame(FBullCowGame CurrentGame)
             else
             {
                 //           " Your guess? "
-                std::cout << " Nice guess: " << WordSpace
+                std::cout << "   Nice try: " << WordSpace
                           << "Bulls: " << CurrentGame.Bulls()
-                          << " Cows: " << CurrentGame.Cows() << std::endl;
+                          << " Cows: " << CurrentGame.Cows() 
+                          << " Tries: " << CurrentGame.GoodTries()
+                          << "/" << CurrentGame.SuggestedMaxTries()
+                          << std::endl;
             }
 
             if (CurrentGame.IsSecretGuessed())
@@ -150,13 +154,14 @@ void PlayGame(FBullCowGame CurrentGame)
      * NOT DOING NOW: A big hashtable dictionary which is randomly probed to
        get qualifying words.  I bet I can use the hash algorithm from Adv10.
        Then I need to get/make a dictionary of isograms.
-     * On each nice guess, provide a count against the limit.
      * On guesses after the first, ask for "Next guess?".  Involves 
        adjusting the PlayGame outer loop from while to do-while.
      /
 
 
-/* 0.0.11 2016-12-24-10:55 Switch to use CurrentGame.GoodTries() and make some
+/* 0.0.12 2016-12-24:13:15 Add tries/limit in "Nice try:" message, some sight-checks.
+          Pseudo-alignment with Lecture 27.
+   0.0.11 2016-12-24-10:55 Switch to use CurrentGame.GoodTries() and make some
           cosmetic changes, add TODOs
    0.0.10 2016-12-23-19:29 Get complete game, crying for refactoring.
    0.0.9 2016-12-23-11:52 Eliminate "using namespace", integrate the FBullCowGame
