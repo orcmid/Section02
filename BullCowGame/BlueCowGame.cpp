@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.10             UTF-8                       2016-12-23 */
+/* BlueCowGame.cpp 0.0.11             UTF-8                       2016-12-24 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
@@ -17,7 +17,7 @@ int main()
     {
         FBullCowGame PlayerGame("isogram"); 
             // TODO: Eventually randomized choice
-            // TODO: Protect against improper SecretWord
+            // TODO: Check against improper SecretWord
          IntroduceGame(PlayerGame);
          PlayGame(PlayerGame);
     } while (SaysToPlayAgain());
@@ -49,9 +49,7 @@ bool SaysToPlayAgain()
 }
 
 
-// PLAY A GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
-
-
+// PLAY CURRENT GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
 
 void PlayGame(FBullCowGame CurrentGame)
 {
@@ -59,6 +57,8 @@ void PlayGame(FBullCowGame CurrentGame)
     for (unsigned i = 0; i < CurrentGame.WordSize(); i++)
         WordSpace += " ";
     
+    // TODO: Guard against WordSize() == 0 coming in here.
+
     while (1)
     {
         std::cout << std::endl;
@@ -71,10 +71,10 @@ void PlayGame(FBullCowGame CurrentGame)
 
             if (Guess.length() == 0)
             {   //           " Your guess? "
-                std::cout << " Giving up after " << CurrentGame.WellFormedTries();
-                if (CurrentGame.WellFormedTries() == 1)
-                    std::cout << " guess.\n\n";
-                else std::cout << " guesses.\n\n";
+                std::cout << " Giving up after " << CurrentGame.GoodTries();
+                if (CurrentGame.GoodTries() == 1)
+                     std::cout << "nice guess.\n\n";
+                else std::cout << "nice guesses.\n\n";
 
                 return;
             }
@@ -84,54 +84,53 @@ void PlayGame(FBullCowGame CurrentGame)
             if (!CurrentGame.IsOnlyLetters())
             {   //           " Your guess? "
                 std::cout << "             Use exactly "
-                    << CurrentGame.WordSize()
-                    << " different alphabetical letters.\n"
-                    << "  Try again: ";
+                          << CurrentGame.WordSize()
+                          << " different alphabetical letters.\n"
+                          << "  Try again: ";
                 continue;
             }
 
             if (!CurrentGame.IsCorrectLength())
             {   //           " Your guess? "
                 std::cout << "             Use exactly "
-                    << CurrentGame.WordSize() << " different letters.\n"
-                    << "  Try again: ";
+                          << CurrentGame.WordSize() << " different letters.\n"
+                          << "  Try again: ";
                 continue;
             }
 
             if (!CurrentGame.IsGoodIsogram())
             {   //           " Your guess? "
                 std::cout << "             The letters must be all different.\n"
-                    << "  Try again: ";
+                          << "  Try again: ";
                 continue;
             }
             else
             {
                 //           " Your guess? "
-                std::cout << "             " << WordSpace
-                    << "Bulls: " << CurrentGame.Bulls()
-                    << " Cows: " << CurrentGame.Cows() << std::endl;
+                std::cout << " Nice guess: " << WordSpace
+                          << "Bulls: " << CurrentGame.Bulls()
+                          << " Cows: " << CurrentGame.Cows() << std::endl;
             }
 
             if (CurrentGame.IsSecretGuessed())
             {
                 //           " Your guess? "
                 std::cout << " CONGRATULATIONS! You got it in "
-                    << CurrentGame.WellFormedTries();
+                          << CurrentGame.GoodTries();
 
-                if (CurrentGame.WellFormedTries() == 1)
-                    std::cout << " guess.\n\n";
+                if (CurrentGame.GoodTries() == 1)
+                     std::cout << " guess.\n\n";
                 else std::cout << " guesses.\n\n";
 
                 return;
             }
 
-            if (CurrentGame.SuggestedMaxTries() <= CurrentGame.WellFormedTries())
+            if (CurrentGame.SuggestedMaxTries() <= CurrentGame.GoodTries())
             {
                 //           " Your guess? "
                 std::cout << "      SORRY! " << WordSpace
-                    << "You exhausted your "
-                    << CurrentGame.SuggestedMaxTries()
-                    << "-guess allowance.\n\n";
+                          << CurrentGame.SuggestedMaxTries()
+                          << "-guess allowance exhausted.\n\n";
 
                 return;
             }
@@ -151,10 +150,15 @@ void PlayGame(FBullCowGame CurrentGame)
      * NOT DOING NOW: A big hashtable dictionary which is randomly probed to
        get qualifying words.  I bet I can use the hash algorithm from Adv10.
        Then I need to get/make a dictionary of isograms.
+     * On each nice guess, provide a count against the limit.
+     * On guesses after the first, ask for "Next guess?".  Involves 
+       adjusting the PlayGame outer loop from while to do-while.
      /
 
 
-/* 0.0.10 2016-12-23-19:29 Get complete game, crying for refactoring.
+/* 0.0.11 2016-12-24-10:55 Switch to use CurrentGame.GoodTries() and make some
+          cosmetic changes, add TODOs
+   0.0.10 2016-12-23-19:29 Get complete game, crying for refactoring.
    0.0.9 2016-12-23-11:52 Eliminate "using namespace", integrate the FBullCowGame
          class and introduce it in place of the previous use of strings.
    0.0.8 2016-12-21-11:29 Abandoning stdio-dialog experiment.  I started a branch

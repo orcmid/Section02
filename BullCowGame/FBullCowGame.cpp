@@ -1,12 +1,19 @@
-/* FBullCowGame.cpp 0.0.4            UTF-8                        2016-12-23 */
+/* FBullCowGame.cpp 0.0.5            UTF-8                        2016-12-24 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
+
+
 #include "FBullCowGame.hpp"
+
+#include <string>
+#include <ctype.h>
+
 
 FBullCowGame::FBullCowGame(std::string SecretWord)
 {
     MySecret = SecretWord;
     MyCurrentGuess = SecretWord;
+        // XXX: temporarily to check as a good isogram
 
     if (!IsGoodIsogram())
         MySecret = std::string("");
@@ -14,6 +21,7 @@ FBullCowGame::FBullCowGame(std::string SecretWord)
     MyCurrentGuess = std::string("");
     MyWellFormedTries = 0;
     MySuggestedMaxTries = 5;
+        /* TODO: Find a better way to estimate this. */
 }
 
 unsigned FBullCowGame::WordSize()
@@ -34,7 +42,7 @@ std::string FBullCowGame::CurrentGuess()
 
 bool FBullCowGame::IsOnlyLetters()
 {
-    if (MyCurrentGuess.length() == 0) return false;
+    if (WordSize() == 0) return false;
 
     for (unsigned i = 0; i < MyCurrentGuess.length(); i++)
     {
@@ -53,7 +61,7 @@ bool FBullCowGame::IsCorrectLength()
 }
 
 bool FBullCowGame::IsGoodIsogram()
-{
+{   
     if (!IsCorrectLength()) return false;
 
     for (unsigned i = 1; i < MyCurrentGuess.length(); i++)
@@ -98,7 +106,7 @@ unsigned FBullCowGame::Cows()
     return MyCows - Bulls();
 }
 
-unsigned FBullCowGame::WellFormedTries()
+unsigned FBullCowGame::GoodTries()
 {
     return MyWellFormedTries;
 }
@@ -111,7 +119,10 @@ unsigned FBullCowGame::SuggestedMaxTries()
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.4 2016-12-23-17:44 Adjust method names, add CurrentGuess(), and stub
+/* 0.0.5 2016-12-24-10:31 Change WellFormedTries() to GoodTries(), scrub the
+         method annotations. Add essential includes without assumptions about
+         FBullCowGame.hpp.
+   0.0.4 2016-12-23-17:44 Adjust method names, add CurrentGuess(), and stub
          out verification of SecretWord until IsGoodIsogram() is working.
    0.0.3 2016-12-23-08:06 Use Ladder of guards to get to IsGoodIsogram().
          All preconditions checked and all methods guarded regardless of
@@ -122,7 +133,7 @@ unsigned FBullCowGame::SuggestedMaxTries()
          */
 
 
-/*        *** end of FBullCowGame.cpp ***                  */
+/*                    *** end of FBullCowGame.cpp ***                         */
 
 
 
