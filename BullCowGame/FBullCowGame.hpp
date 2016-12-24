@@ -1,5 +1,5 @@
 #pragma once
-/* BlueCowGame.hpp 0.0.5             UTF-8                        2016-12-24 */
+/* BlueCowGame.hpp 0.0.6             UTF-8                        2016-12-24 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <string>
@@ -17,7 +17,7 @@ public:
            so that WordSize() == 0 and all guesses will fail.
            */
 
-    unsigned WordSize();
+    unsigned WordSize() const;
         /* The size of the SecretWord.  
            0 if SecretWord was not a good isogram. */
 
@@ -26,40 +26,40 @@ public:
             until another is set.
             */
 
-    std::string CurrentGuess();
+    std::string CurrentGuess() const;
         /* The latest SetGuess() parameter and the 
            empty string, "", before the first SetGuess(). */
 
-    bool IsOnlyLetters();
+    bool IsOnlyLetters() const;
          /* When there are only some alpha characters in 
             CurrentGuess() 
             */
 
-    bool IsCorrectLength();
+    bool IsCorrectLength() const;
          /* When the alpha CurrentGuess() is of the correct length */
 
-    bool IsGoodIsogram();
+    bool IsGoodIsogram() const;
          /* When CurrentGuess() is a well-formed isogram of 
             correct length, whether or not a winner. 
             */
 
-    bool IsSecretGuessed();
+    bool IsSecretGuessed() const;
          /* CurrentGuess() matches the secret word, unless
             the secret word is improper (so WordSize() == 0)
             */
 
-    unsigned Bulls();
+    unsigned Bulls() const;
         /* the number of Bulls when IsGoodIsogram(), else 0 */
 
-    unsigned Cows();
+    unsigned Cows() const;
         /* the number of Cows when IsGoodIsogram(), else 0 */
 
-    unsigned GoodTries();
+    unsigned GoodTries() const;
         /* the number of SetGuess() operations for which 
            IsGoodIsogram() was true.   
            */
 
-    unsigned SuggestedMaxTries();
+    unsigned SuggestedMaxTries() const;
         /* the number of tries suggested as a limit for the 
            current SecretWord */
         /* TODO: Over-ride with a constructor parameter?
@@ -80,7 +80,13 @@ private:
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.5 2016-12-24-10:)4 Annotate the methods better.  Change WellFormedTries()
+/* TODO:
+     * Make the string comparisons case-insensitive.
+       */
+
+/* 0.0.6 2016-12-24-13:47 Declare all methods const except SetGuess.  Aligning with
+         Lecture 28.
+   0.0.5 2016-12-24-10:04 Annotate the methods better.  Change WellFormedTries()
          to GoodTries().
    0.0.4 2016-12-23-17:43 Switch to SetGuess() and provide CurrentGuess().
          MyCows and MyBulls not needed in the state record.

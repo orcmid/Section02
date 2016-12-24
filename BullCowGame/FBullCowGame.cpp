@@ -1,4 +1,4 @@
-/* FBullCowGame.cpp 0.0.5            UTF-8                        2016-12-24 */
+/* FBullCowGame.cpp 0.0.6            UTF-8                        2016-12-24 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 
@@ -24,7 +24,7 @@ FBullCowGame::FBullCowGame(std::string SecretWord)
         /* TODO: Find a better way to estimate this. */
 }
 
-unsigned FBullCowGame::WordSize()
+unsigned FBullCowGame::WordSize() const
 {
     return MySecret.length();
 }
@@ -35,12 +35,12 @@ void FBullCowGame::SetGuess(std::string Guess)
     if (IsGoodIsogram()) MyWellFormedTries++;
 }
 
-std::string FBullCowGame::CurrentGuess()
+std::string FBullCowGame::CurrentGuess() const
 {
     return MyCurrentGuess;
 }
 
-bool FBullCowGame::IsOnlyLetters()
+bool FBullCowGame::IsOnlyLetters() const
 {
     if (WordSize() == 0) return false;
 
@@ -51,16 +51,16 @@ bool FBullCowGame::IsOnlyLetters()
 
     return true; 
   
-}
+} 
 
-bool FBullCowGame::IsCorrectLength()
+bool FBullCowGame::IsCorrectLength() const
 {
     if (!IsOnlyLetters()) return false;
 
     return MyCurrentGuess.length() == MySecret.length();
 }
 
-bool FBullCowGame::IsGoodIsogram()
+bool FBullCowGame::IsGoodIsogram() const
 {   
     if (!IsCorrectLength()) return false;
 
@@ -74,14 +74,14 @@ bool FBullCowGame::IsGoodIsogram()
     return true;
 }
 
-bool FBullCowGame::IsSecretGuessed()
+bool FBullCowGame::IsSecretGuessed() const
 {
     if (!IsGoodIsogram()) return false;
 
     return Bulls() == MySecret.length();
 }
 
-unsigned FBullCowGame::Bulls()
+unsigned FBullCowGame::Bulls() const
 {
     if (!IsGoodIsogram()) return 0;
 
@@ -93,7 +93,7 @@ unsigned FBullCowGame::Bulls()
     return MyBulls;
 }
 
-unsigned FBullCowGame::Cows()
+unsigned FBullCowGame::Cows() const
 {
     if (!IsGoodIsogram()) return 0;
 
@@ -106,12 +106,12 @@ unsigned FBullCowGame::Cows()
     return MyCows - Bulls();
 }
 
-unsigned FBullCowGame::GoodTries()
+unsigned FBullCowGame::GoodTries() const
 {
     return MyWellFormedTries;
 }
 
-unsigned FBullCowGame::SuggestedMaxTries()
+unsigned FBullCowGame::SuggestedMaxTries() const
 {
     return MySuggestedMaxTries;
 }
@@ -119,7 +119,8 @@ unsigned FBullCowGame::SuggestedMaxTries()
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.5 2016-12-24-10:31 Change WellFormedTries() to GoodTries(), scrub the
+/* 0.0.6 2016-12-24-13:45 Set const on all methods except SetGuess().
+   0.0.5 2016-12-24-10:31 Change WellFormedTries() to GoodTries(), scrub the
          method annotations. Add essential includes without assumptions about
          FBullCowGame.hpp.
    0.0.4 2016-12-23-17:44 Adjust method names, add CurrentGuess(), and stub
