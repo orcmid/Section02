@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.12             UTF-8                       2016-12-24 */
+/* BlueCowGame.cpp 0.0.13             UTF-8                       2016-12-24 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <iostream>
@@ -50,7 +50,7 @@ bool SaysToPlayAgain()
 }
 
 
-// PLAY CURRENT GAME UNTIL SOLVED OR ATTEMPTS EXHAUSTED
+// PLAY CURRENT GAME UNTIL SOLVED , ATTEMPTS EXHAUSTED, OR PLAYER QUITS
 
 void PlayGame(FBullCowGame CurrentGame)
 {
@@ -60,11 +60,12 @@ void PlayGame(FBullCowGame CurrentGame)
     
     // TODO: Guard against WordSize() == 0 coming in here.
 
-    while (1)
-    {
-        std::cout << std::endl;
-        std::cout << " Your guess? ";
 
+    std::cout << std::endl;
+    std::cout << " Your guess? ";
+
+    while (true)
+    {
         do
         {
             std::string Guess = "";
@@ -74,8 +75,8 @@ void PlayGame(FBullCowGame CurrentGame)
             {   //           " Your guess? "
                 std::cout << " Giving up after " << CurrentGame.GoodTries();
                 if (CurrentGame.GoodTries() == 1)
-                     std::cout << "nice guess.\n\n";
-                else std::cout << "nice guesses.\n\n";
+                     std::cout << " try.\n\n";
+                else std::cout << " tries.\n\n";
 
                 return;
             }
@@ -118,8 +119,8 @@ void PlayGame(FBullCowGame CurrentGame)
 
             if (CurrentGame.IsSecretGuessed())
             {
-                //           " Your guess? "
-                std::cout << " CONGRATULATIONS! You got it in "
+                //             " Your guess? "
+                std::cout << "\n CONGRATULATIONS! You got it in "
                           << CurrentGame.GoodTries();
 
                 if (CurrentGame.GoodTries() == 1)
@@ -131,8 +132,8 @@ void PlayGame(FBullCowGame CurrentGame)
 
             if (CurrentGame.SuggestedMaxTries() <= CurrentGame.GoodTries())
             {
-                //           " Your guess? "
-                std::cout << "      SORRY! " << WordSpace
+                //             " Your guess? "
+                std::cout << "\n      SORRY! " << WordSpace
                           << CurrentGame.SuggestedMaxTries()
                           << "-guess allowance exhausted.\n\n";
 
@@ -141,6 +142,8 @@ void PlayGame(FBullCowGame CurrentGame)
 
         } while (!CurrentGame.IsGoodIsogram());
 
+        //           " Your guess? "
+        std::cout << " Next guess? ";
     }
 
 }
@@ -154,12 +157,12 @@ void PlayGame(FBullCowGame CurrentGame)
      * NOT DOING NOW: A big hashtable dictionary which is randomly probed to
        get qualifying words.  I bet I can use the hash algorithm from Adv10.
        Then I need to get/make a dictionary of isograms.
-     * On guesses after the first, ask for "Next guess?".  Involves 
-       adjusting the PlayGame outer loop from while to do-while.
-     /
+     */
 
 
-/* 0.0.12 2016-12-24:13:15 Add tries/limit in "Nice try:" message, some sight-checks.
+/* 0.0.13 2016-12-24-14:30 Fix the PlayGame() loop to ask for "Next guess?" after 
+          the first, other sprucing up.
+   0.0.12 2016-12-24:13:15 Add tries/limit in "Nice try:" message, some sight-checks.
           Pseudo-alignment with Lecture 27.
    0.0.11 2016-12-24-10:55 Switch to use CurrentGame.GoodTries() and make some
           cosmetic changes, add TODOs
