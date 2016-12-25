@@ -1,7 +1,7 @@
-Section02-BullCow-GDD.txt 0.0.1       UTF-8                         2016-12-18
+Section02-BullCow-GDD.txt 0.0.3       UTF-8                         2016-12-25
+/* ------1---------2---------3---------4---------5---------6---------7------ */
 
-         <\\Astraendo2\D\giocchi\Udemy-UnrealEngineDeveloper\Section01
-                      \Section01-BullCow-GDD.txt>
+        <https://github.com/orcmid/Section02>\Section02-BullCow-GDD.txt
 
                    BULLCOW COMMAND-LINE GAME DESIGN DOCUMENT
                    =========================================
@@ -41,7 +41,6 @@ Section02-BullCow-GDD.txt 0.0.1       UTF-8                         2016-12-18
    until the limit on guesses is reached.
    
 3. FUNCTIONAL REQUIREMENTS 
-
    
    Accomplish it with a simple command-line program using text input-output.
    
@@ -78,37 +77,132 @@ Section02-BullCow-GDD.txt 0.0.1       UTF-8                         2016-12-18
      * If the word has been found (n Bulls), the user is congratulated.
      
      * If the limit on guesses has been reached, the user is commiserated with
-       and told what the word is.
+       and told what the word is. [dh:2016-12-25 This is generally not a good
+	   idea.  We don't want to give users hints about what the dictionary is,
+	   and the user can try again, can even notice when there starts to be
+	   a previously-remembered pattern.]
        
      * For either outcome, the user is offered the choice of guessing another
        word.
        
    ASSETS
    
-     No assets are required beyond an initial list of words (or a single word)
+     No assets are required beyond an initial list of words (or a single word).
      
 4. ARCHITECTURE
 
    We are going to do bottom-up spiral construction since this is an easy
    problem.
-     
-4. POSSIBLE FUTURE IDEAS
 
-   Use list of more than one word
+   A form of Model-View-Controller will be applied.  The Model class
+   is only about the secret-holder offering methods that answer particular
+   questions about the current guess.
+
+   The view is about the presentations, and that might not be easily separated
+   from control in the case of a console application with only line input-output.
+   The prospect of separationg the interactions is interesting to consider.
+     
+5. POSSIBLE FUTURE IDEAS
+
+   Use list of more than one choice for the secret word
    
    Let the user choose the maximum length of hidden word to be offered.
    
    Minimize the odds of a word being repeated.
    
-   Provide a way to create the word list, shuffle it, and work randomly
-   through it.
-   
-   
-       
- 
-   
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+   Provide a way to create the word list, shuffle it (e.g., by hashing), 
+   and work randomly through it.  A scrabble dictionary that is filtered
+   for isograms would be perfect.  This might also be a good way to determine
+   complexity using the scrabble score for a word.  However, changing the
+   suggested limit based on that is a clue, so we can't use it in the
+   guessing, only perhaps in scoring.
 
+   In competitive use the trick is to have two players attempt the 
+   same words, though not necessarily in the same sequence.  Then determine 
+   the number of times a player achieved fewer tries on the same word
+   as the opponent, the winner being the player with the most fewer tries.
+   There might even be a sudden-death playoff.
+
+   It is not clear that the word should be revealed.  I have added a 
+   caveat about that.  
+
+   Develop a solver that will algorithmically produce guesses.  This 
+   works best, in one sense, if the guesses do not have to be known 
+   English words.  If the solver has access to the same word list, 
+   that can be even better, since letter patterns can be filtered
+   for and this can lead to more rapid elimination in some cases.
+
+   Something to take advantage of in a solver is the fact that we
+   don't actually care what the letters are, in reducing to a
+   set of WordLength() letters, they are just as good as x[0], x[n-1]
+   and we only care about position.  Basically we are reducing a
+   candidate set.  At the beginning, elimination of candidates is
+   as useful as confirming candidates and establishing their positions.
+   The middle game is the trickiest as is blending the end game into
+   the middle game.
+
+   There is also the matter of finding out what the optimum play tree
+   is.  There is background on this, although it is a little difficult
+   to figure out how the existing diagrams work.  Also, the optimum
+   tree may depend on the corpus of words, and it varies by word
+   length.  This requires some heavy analysis and it may be better
+   to do that in something like F# or Python or something else that
+   handles lists very well.
+
+   For a solver, I have this feeling about tri-state Booleans, such
+   as occur in circuit simplifiers: 0, 1, 2 for true, false, don't care.
+   Not quite the same thing, but interesting.  This is for searching
+   words.  I am guessing about this.  Don't have an useful conception.
+
+   Knuth [4] mentions minimax strategies, which also means alpha-beta 
+   pruning might be applicable.  There are rich recreational-
+   computing explorations possible with this.  It would be useful
+   to make a dedication to Fred Gruenberger in that respect.
+
+6. BACKGROUND INFORMATION
+
+   [1] Wikipedia.  Letter Frequency.  
+		<https://en.wikipedia.org/wiki/Letter_frequency>
+		Relative frequency of letters in large samples of English
+		words: e t a o i n s h r d l c u m w f g y p b v k j x q z
+		Relative frequency of first letters in large samples of
+		words: t o a w b c d s f m r h i y e g l n p u v j k q z x
+		These might best be derived from a corpus of isograms of
+		each length, though.
+
+	[2] Wikipedia.  Bulls and Cows.
+		<https://en.wikipedia.org/wiki/Bulls_and_Cows>
+
+	[3] Slovesnov.  Optimal Algorithms for Bulls and Cows Game.
+		<http://slovesnov.users.sourceforge.net/index.php?bullscows,english>
+
+	[4] Knuth, Donald E.  The Computer as Master Mind.  Chapter 25, 
+		pp. 219-229 in "Selected Papers on Fun & Games."  CLSI Lecture
+		Notes no. 192.  CLSI Publications (Stanford, CA: 2011)
+		ISBN 1-57586-584-X.
+		   Bulls & Cows is mentioned in a few asides.  If we don't
+		consider that isograms must also be actually-used English
+		words, the alphabet itself is not so important as there 
+		simply being 26 symbols from which n-length terms are to
+		be guessed.
+
+	[5] Knuth, Donald E.  ETAOIN SHRDLU Non-Crashing Sets.  Chapter 35,
+	    pp. 429-430 in "Selected Papers on Fun & Games."  CLSI Lecture
+		Notes no. 192.  CLSI Publications (Stanford, CA: 2011)
+		ISBN 1-57586-584-X.
+		   This is related to Bulls & Cows in that it provides a
+		way of guessing 5-letter words that in some manner work
+		through getting disjoint arrangements of x letters in
+		in <= x tries.  More recreational computing that may be
+		adaptable to Bulls & Cows guessing.  Note: Knuth is not
+		limiting this exploration to isograms.
+		     
+ 
+/* ------1---------2---------3---------4---------5---------6---------7------ */
+
+ 0.0.3 2016-12-25-10:26 Reflect presence on GitHub now.  Adjust some items,
+       Add possible future ideas and also some resources and background on 
+	   the game.
  0.0.2 2016-12-18-15:01 Duh. This is for Section02, not Section01.
  0.0.1 2016-12-18-14:55 First Draft kept in the folder on this course Section
        for reference and refinement.
