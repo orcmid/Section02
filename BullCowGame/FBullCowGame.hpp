@@ -1,5 +1,5 @@
 #pragma once
-/* BlueCowGame.hpp 0.0.6             UTF-8                        2016-12-24 */
+/* BlueCowGame.hpp 0.0.7             UTF-8                        2016-12-25 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <string>
@@ -12,9 +12,9 @@ class FBullCowGame
 public:
     FBullCowGame(std::string SecretWord);
         /* Each instance has its own alpha isogram, with the word
-           size determined automatically. 
-           If the SecretWord is not an isogram, it is set to ""
-           so that WordSize() == 0 and all guesses will fail.
+           size determined automatically.  Capitalization does not
+           matter.  If the SecretWord is not an isogram, it is set 
+           to "" so that WordSize() == 0 and all guesses will fail.
            */
 
     unsigned WordSize() const;
@@ -23,7 +23,8 @@ public:
 
     void SetGuess(std::string Guess);
          /* Enter a Guess to be the CurrentGuess() 
-            until another is set.
+            until another is set.  Capitalization does not
+            matter.
             */
 
     std::string CurrentGuess() const;
@@ -31,12 +32,13 @@ public:
            empty string, "", before the first SetGuess(). */
 
     bool IsOnlyLetters() const;
-         /* When there are only some alpha characters in 
+         /* When there are only alpha characters in 
             CurrentGuess() 
             */
 
     bool IsCorrectLength() const;
-         /* When the alpha CurrentGuess() is of the correct length */
+         /* When the CurrentGuess() of only letters has the
+            same length as the SecretWord. */
 
     bool IsGoodIsogram() const;
          /* When CurrentGuess() is a well-formed isogram of 
@@ -44,8 +46,9 @@ public:
             */
 
     bool IsSecretGuessed() const;
-         /* CurrentGuess() matches the secret word, unless
-            the secret word is improper (so WordSize() == 0)
+         /* Ignoring capitalizations, CurrentGuess() matches 
+            the secret word, unless the secret word is improper 
+            (so WordSize() == 0)
             */
 
     unsigned Bulls() const;
@@ -80,11 +83,11 @@ private:
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* TODO:
-     * Make the string comparisons case-insensitive.
-       */
 
-/* 0.0.6 2016-12-24-13:47 Declare all methods const except SetGuess.  Aligning with
+/* 0.0.7 2016-12-25-07:53 Reflect that the handling of SecretWord and CurrentGuess
+         is case-insensitive, allowing players to use capitalization in a way that
+         aids zeroing in on a solution.  Touch-up interface comments.
+   0.0.6 2016-12-24-13:47 Declare all methods const except SetGuess.  Aligning with
          Lecture 28.
    0.0.5 2016-12-24-10:04 Annotate the methods better.  Change WellFormedTries()
          to GoodTries().

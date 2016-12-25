@@ -1,4 +1,4 @@
-/* FBullCowGame.cpp 0.0.6            UTF-8                        2016-12-24 */
+/* FBullCowGame.cpp 0.0.7            UTF-8                        2016-12-25 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 
@@ -7,6 +7,9 @@
 
 #include <string>
 #include <ctype.h>
+    /* XXX: Game is restricted to use of A-Z, a-z, 26-letter "Roman"
+            alphabet.  Complexity of other alphabets is not addressed. 
+            */
 
 
 FBullCowGame::FBullCowGame(std::string SecretWord)
@@ -21,13 +24,12 @@ FBullCowGame::FBullCowGame(std::string SecretWord)
     MyCurrentGuess = std::string("");
     MyWellFormedTries = 0;
     MySuggestedMaxTries = 5;
-        /* TODO: Find a better way to estimate this. */
+        /* TODO: Find a better way to estimate this based
+                 on SecretWord.length() without giving 
+                 anything away about complexity. */
 }
 
-unsigned FBullCowGame::WordSize() const
-{
-    return MySecret.length();
-}
+unsigned FBullCowGame::WordSize() const { return MySecret.length(); }
 
 void FBullCowGame::SetGuess(std::string Guess)
 {
@@ -35,10 +37,7 @@ void FBullCowGame::SetGuess(std::string Guess)
     if (IsGoodIsogram()) MyWellFormedTries++;
 }
 
-std::string FBullCowGame::CurrentGuess() const
-{
-    return MyCurrentGuess;
-}
+std::string FBullCowGame::CurrentGuess() const { return MyCurrentGuess; }
 
 bool FBullCowGame::IsOnlyLetters() const
 {
@@ -49,8 +48,7 @@ bool FBullCowGame::IsOnlyLetters() const
         if (!isalpha(MyCurrentGuess[i])) return false;
     }
 
-    return true; 
-  
+    return true;   
 } 
 
 bool FBullCowGame::IsCorrectLength() const
@@ -61,7 +59,13 @@ bool FBullCowGame::IsCorrectLength() const
 }
 
 bool FBullCowGame::IsGoodIsogram() const
-{   
+{   /* XXX: This Implementation does not require that SecretWord
+            and CurrentGuess be known English words. It only
+            deals with spelling, not recognition or even
+            pronuncibility of the word.  This is an advantage
+            in mechanical guessing heuristics.
+            */
+
     if (!IsCorrectLength()) return false;
 
     for (unsigned i = 1; i < MyCurrentGuess.length(); i++)
@@ -69,7 +73,8 @@ bool FBullCowGame::IsGoodIsogram() const
            CurrentGuess[j], j < i
            */
         for (unsigned j = 0; j < i; j++)
-            if (MyCurrentGuess[i] == MyCurrentGuess[j]) return false;
+            if (tolower(MyCurrentGuess[i]) == tolower(MyCurrentGuess[j])) 
+                return false;
 
     return true;
 }
@@ -88,38 +93,38 @@ unsigned FBullCowGame::Bulls() const
     unsigned MyBulls = 0;
 
     for (unsigned i = 0; i < MySecret.length(); i++)
-        if (MySecret[i] == MyCurrentGuess[i]) MyBulls++;
+        if (tolower(MySecret[i]) == tolower(MyCurrentGuess[i])) 
+            MyBulls++;
 
     return MyBulls;
 }
 
 unsigned FBullCowGame::Cows() const
-{
+{  
     if (!IsGoodIsogram()) return 0;
 
     unsigned MyCows = 0;
 
     for (unsigned i = 0; i < MySecret.length(); i++)
         for (unsigned j = 0; j < MyCurrentGuess.length(); j++)
-            if (MySecret[i] == MyCurrentGuess[j]) MyCows++;
+            if (tolower(MySecret[i]) == tolower(MyCurrentGuess[j])) 
+                MyCows++;
 
     return MyCows - Bulls();
 }
 
-unsigned FBullCowGame::GoodTries() const
-{
-    return MyWellFormedTries;
-}
+unsigned FBullCowGame::GoodTries() const { return MyWellFormedTries; }
 
-unsigned FBullCowGame::SuggestedMaxTries() const
-{
-    return MySuggestedMaxTries;
-}
+unsigned FBullCowGame::SuggestedMaxTries() const 
+    { return MySuggestedMaxTries; }
 
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.6 2016-12-24-13:45 Set const on all methods except SetGuess().
+/* 0.0.7 2016-12-25-08:17 Use case-insensitive checking of SecretWord and 
+         CurrentGuess.  Adjust formatting and tighten comments and identfication
+         of edge cases. 
+   0.0.6 2016-12-24-13:45 Set const on all methods except SetGuess().
    0.0.5 2016-12-24-10:31 Change WellFormedTries() to GoodTries(), scrub the
          method annotations. Add essential includes without assumptions about
          FBullCowGame.hpp.
