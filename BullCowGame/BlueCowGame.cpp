@@ -1,5 +1,13 @@
-/* BlueCowGame.cpp 0.0.13             UTF-8                       2016-12-24 */
+/* BlueCowGame.cpp 0.0.14             UTF-8                       2016-12-29 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
+
+/*                    BULLS AND COWS CONSOLE PROGRAM
+                      ******************************
+                      
+        This is the interactive View Controller that uses class
+        FBullCowGame for the separate model which provides the
+        assessment of guesses and the state of a single game.
+        */
 
 #include <iostream>
 #include <string>
@@ -12,7 +20,8 @@ bool SaysToPlayAgain();
 
 
 int main() 
-{   //TODO: Announce the program in some handy way.
+{   //TODO: Announce the program in some handy way.  
+    //TODO: Let it specify the suggested indent underneath.
     do  
     {
         FBullCowGame PlayerGame("isogram"); 
@@ -44,7 +53,7 @@ void IntroduceGame(FBullCowGame NewGame)
 bool SaysToPlayAgain()
 {
     std::cout << "Do you want to Play again (y/N)? ";
-    std::string Response = "";
+   std::string Response = "";
     std::getline(std::cin, Response);
     return (Response[0] == 'y' || Response[0] == 'Y');
 }
@@ -54,7 +63,7 @@ bool SaysToPlayAgain()
 
 void PlayGame(FBullCowGame CurrentGame)
 {
-    std::string WordSpace = " ";
+   std::string WordSpace = " ";
     for (unsigned i = 0; i < CurrentGame.WordSize(); i++)
         WordSpace += " ";
     
@@ -63,14 +72,17 @@ void PlayGame(FBullCowGame CurrentGame)
 
     std::cout << std::endl;
     std::cout << " Your guess? ";
+        // inviting the first guess
 
     while (true)
     {
         do
         {
-            std::string Guess = "";
+            // GET GUESS FROM PLAYER
+           std::string Guess = "";
             std::getline(std::cin, Guess);
 
+            // DETERMINE IF PLAYER WANTS TO QUIT
             if (Guess.length() == 0)
             {   //           " Your guess? "
                 std::cout << " Giving up after " << CurrentGame.GoodTries();
@@ -81,7 +93,10 @@ void PlayGame(FBullCowGame CurrentGame)
                 return;
             }
 
+            // ESTABLISH INPUT AS CURRENT GUESS
             CurrentGame.SetGuess(Guess);
+
+            // REJECT GUESSES THAT ARE NOT GOOD TRIES
 
             if (!CurrentGame.IsOnlyLetters())
             {   //           " Your guess? "
@@ -106,7 +121,8 @@ void PlayGame(FBullCowGame CurrentGame)
                           << "  Try again: ";
                 continue;
             }
-            else
+            
+            // CONFIRM NICE TRY TO THE PLAYER
             {
                 //           " Your guess? "
                 std::cout << "   Nice try: " << WordSpace
@@ -117,6 +133,7 @@ void PlayGame(FBullCowGame CurrentGame)
                           << std::endl;
             }
 
+            // REPORT AND END WHEN THE SECRETWORD IS GUESSED
             if (CurrentGame.IsSecretGuessed())
             {
                 //             " Your guess? "
@@ -130,6 +147,7 @@ void PlayGame(FBullCowGame CurrentGame)
                 return;
             }
 
+            //  REPORT AND END WHEN THE THERE ARE NO MORE TRIES AVAILALBE
             if (CurrentGame.SuggestedMaxTries() <= CurrentGame.GoodTries())
             {
                 //             " Your guess? "
@@ -141,7 +159,12 @@ void PlayGame(FBullCowGame CurrentGame)
             }
 
         } while (!CurrentGame.IsGoodIsogram());
+          /* continuing unless game-over return happened or we've 
+             chalked up a Good Try that's not the Secret Word and 
+             there's opportunity for another Try.
+             */
 
+        // INVITE ANOTHER TRY
         //           " Your guess? "
         std::cout << " Next guess? ";
     }
@@ -157,10 +180,19 @@ void PlayGame(FBullCowGame CurrentGame)
      * NOT DOING NOW: A big hashtable dictionary which is randomly probed to
        get qualifying words.  I bet I can use the hash algorithm from Adv10.
        Then I need to get/make a dictionary of isograms.
+     * Switch to Release Builds and use static libraries.
+     * See what the compiling of functions is all about and how that impacts
+       build-time and also code footprint.
+     * Turn off symbols too, since not going to use on-line crash reporting.
+     * Move the view process into a separate class so that PlayGame() is
+       more compact and the fussing with input-output is consolidated in
+       one class.
      */
 
 
-/* 0.0.13 2016-12-24-14:30 Fix the PlayGame() loop to ask for "Next guess?" after 
+/* 0.0.14 2016-12-29-09:40 Expand the Pseudocode to give more guidance through 
+          PlayGame(), per Lecture 30.  Advance TODOs
+   0.0.13 2016-12-24-14:30 Fix the PlayGame() loop to ask for "Next guess?" after 
           the first, other sprucing up.
    0.0.12 2016-12-24:13:15 Add tries/limit in "Nice try:" message, some sight-checks.
           Pseudo-alignment with Lecture 27.

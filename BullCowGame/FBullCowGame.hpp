@@ -1,5 +1,5 @@
 #pragma once
-/* BlueCowGame.hpp 0.0.7             UTF-8                        2016-12-25 */
+/* BlueCowGame.hpp 0.0.8             UTF-8                        2016-12-29 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <string>
@@ -83,14 +83,21 @@ private:
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
+/* TODO:
+     * Change SuggestedMaxTries() to MaxTries() and add optional max parameter
+       to the constructor cases. 
+       */
 
-/* 0.0.7 2016-12-25-07:53 Reflect that the handling of SecretWord and CurrentGuess
-         is case-insensitive, allowing players to use capitalization in a way that
-         aids zeroing in on a solution.  Touch-up interface comments.
-   0.0.6 2016-12-24-13:47 Declare all methods const except SetGuess.  Aligning with
-         Lecture 28.
-   0.0.5 2016-12-24-10:04 Annotate the methods better.  Change WellFormedTries()
-         to GoodTries().
+/* 0.0.8 2016-12-29-09:32 Touch up line-lengths to avoid word wrapping at
+         the ruler setting.  Add TODO.
+   0.0.7 2016-12-25-07:53 Reflect that the handling of SecretWord and 
+         CurrentGuess is case-insensitive, allowing players to use 
+         capitalization in a way that aids zeroing in on a solution.  
+         Touch-up interface comments.
+   0.0.6 2016-12-24-13:47 Declare all methods const except SetGuess.  
+         Aligning with Lecture 28.
+   0.0.5 2016-12-24-10:04 Annotate the methods better.  
+         Change WellFormedTries() to GoodTries().
    0.0.4 2016-12-23-17:43 Switch to SetGuess() and provide CurrentGuess().
          MyCows and MyBulls not needed in the state record.
    0.0.3 2016-12-22-22:31 Smooth and keep aligned with FBullCowGame.cpp
