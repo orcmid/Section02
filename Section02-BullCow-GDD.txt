@@ -1,4 +1,4 @@
-Section02-BullCow-GDD.txt 0.0.3       UTF-8                         2016-12-25
+Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
         <https://github.com/orcmid/Section02>\Section02-BullCow-GDD.txt
@@ -101,6 +101,22 @@ Section02-BullCow-GDD.txt 0.0.3       UTF-8                         2016-12-25
    The view is about the presentations, and that might not be easily separated
    from control in the case of a console application with only line input-output.
    The prospect of separationg the interactions is interesting to consider.
+   
+   For convenience of deployment and of operation, a batch script is used 
+   for initiation, similar to Adv10 release operation (not dev building), and
+   the creation of a shortcut that can be placed anywhere is also provided.
+   
+   This will be an elementary deployment model and not consider side-by-side
+   versions or anything like that.
+   
+   The deployment model will be with release builds, also.  And the notion of
+   always having everything needed in a release and only in a release will be
+   applied.  This is more process (i.e., software/systems engineering), not
+   program architecture so much.
+   
+   For play-testing it might be interesting to introduce the idea of an auto-
+   play mechanism, providing a way to demonstrate the guessing procedure.  This
+   is not unlike having a solver.
      
 5. POSSIBLE FUTURE IDEAS
 
@@ -200,6 +216,8 @@ Section02-BullCow-GDD.txt 0.0.3       UTF-8                         2016-12-25
  
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
+ 0.0.4 2016-12-29-09:18 Add deployment considerations to architecture, and
+       look at some software-engineering architectural considerations too.
  0.0.3 2016-12-25-10:26 Reflect presence on GitHub now.  Adjust some items,
        Add possible future ideas and also some resources and background on 
 	   the game.
