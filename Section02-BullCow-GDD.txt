@@ -1,4 +1,4 @@
-Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
+Section02-BullCow-GDD.txt 0.0.5       UTF-8                         2016-12-30
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
         <https://github.com/orcmid/Section02>\Section02-BullCow-GDD.txt
@@ -9,10 +9,19 @@ Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
     This is the command-line game that is used as an Introduction to C++ in
     the Udemy "Unreal Engine Developer Course: Learn C++ & Make Games" at
     <https://www.udemy.com/unrealcourse>.  The Game Design Document (GDD)
-    development arises at Section 02, Lecture 11.
+    development arises at Section 02, Lecture 11.  The command-line version
+    is developed over the entire course of Section 02 to establish the use
+    of Visual Studio Community Edition and Visual C++ which will later be
+    used beneath the Unreal Engine in subsequent sections.
     
-    This document is to be maintained.  It is expected that the narrative
-    of this document will be worked into the code structure itself.
+    This particular solution deviates from that of the course in significant
+    ways and it should be examined as a source of alternative ideas and not 
+    as an appropriate achievement of the objectives of Section 02.  Beginners
+    should follow the exact treatment in the course and not be distracted by
+    the deviations made here.
+    
+    This document is to be maintained.  It is expected that some of the 
+    narrative of this document will be worked into the code structure itself.
     
 1. THE PROBLEM
 
@@ -22,20 +31,20 @@ Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
    English.
    
 2. CONCEPTS AND RULES
-   See <https://en.wikipedia.org/wiki/Bulls_and_Cows>
+   See <https://en.wikipedia.org/wiki/Bulls_and_Cows> [2].
 
    The program chooses an English isogram word, one that has no repeating 
    letters.  Examples are "rules", "tough", "begin", "trowel", "burglar",
    "cough", "counsel", "cuneiform", "human", "computer", "software", "isogram",
-   and many more.  The most popular form uses 4-letter words.
+   and many more.  The most popular forms uses 4/5-letter words.
    
-   The player is asked to enter a guess for what the n-letter word is.
+   The player is asked to enter a guess for what the n-letter secret word is.
    
-   The program reports the number of Bulls, letters in the right place, 
-   possibly 0.
+   The program reports the number of Bulls, letters in the same place as in
+   the secret word, possibly 0.
    
-   The program reports the number of Cows, letters in the word but not in
-   the right place, also possibly 0.
+   The program reports the number of Cows, letters in the secret word but not 
+   in the same place, also possibly 0.
    
    If the word has not been guessed yet, the player is allowed another guess
    until the limit on guesses is reached.
@@ -61,14 +70,15 @@ Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
    
      * For each play, the computer randomly chooses one of its words.
    
-     * The user will be told how many letters there are in the word to guess.
+     * The user will be told how many letters there are in the word to guess
+       and also how many tries are allowed.
      
      * The user will be asked to submit a guess.
      
      * If the guess is not an isogram of the correct length, 
        the user will be asked to try again.
      
-     * If the guess is an isogram the user will be told the number of Bulls
+     * If the guess is a good isogram the user will be told the number of Bulls
        and Cows.
        
      * If the word has not been guessed yet, and the limit of guesses has not
@@ -82,8 +92,7 @@ Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
 	   and the user can try again, can even notice when there starts to be
 	   a previously-remembered pattern.]
        
-     * For either outcome, the user is offered the choice of guessing another
-       word.
+     * For either outcome, the user is offered the choice of another play.
        
    ASSETS
    
@@ -100,25 +109,26 @@ Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
 
    The view is about the presentations, and that might not be easily separated
    from control in the case of a console application with only line input-output.
-   The prospect of separationg the interactions is interesting to consider.
+   The interactions will be separated even though operation is synchronous [7].
    
    For convenience of deployment and of operation, a batch script is used 
    for initiation, similar to Adv10 release operation (not dev building), and
-   the creation of a shortcut that can be placed anywhere is also provided.
+   the creation of a shortcut that can be placed anywhere is also provided. 
+   (See [6].)
    
    This will be an elementary deployment model and not consider side-by-side
-   versions or anything like that.
+   versions or anything like that.  
    
    The deployment model will be with release builds, also.  And the notion of
    always having everything needed in a release and only in a release will be
    applied.  This is more process (i.e., software/systems engineering), not
    program architecture so much.
-   
-   For play-testing it might be interesting to introduce the idea of an auto-
-   play mechanism, providing a way to demonstrate the guessing procedure.  This
-   is not unlike having a solver.
      
 5. POSSIBLE FUTURE IDEAS
+
+   For play-testing it might also be interesting to introduce the idea of an 
+   auto-play mechanism, providing a way to demonstrate the guessing procedure.  
+   This is not unlike having a solver.
 
    Use list of more than one choice for the secret word
    
@@ -212,10 +222,34 @@ Section02-BullCow-GDD.txt 0.0.4       UTF-8                         2016-12-29
 		in <= x tries.  More recreational computing that may be
 		adaptable to Bulls & Cows guessing.  Note: Knuth is not
 		limiting this exploration to isograms.
+		
+	[6] See <https://github.com/orcmid/Adv10/tree/master/dev/WinCon> for
+	    the evolution of this idea, but for deployment, not development.
+	    The generic case is evolving on <http://nfoWare.com/dev> notes and at
+	    <https://github.com/orcmid/nfoTools/tree/master/devKits/WinDev/WinConKit>
+	
+	[7] Because all interactions in the command-line version of BullCowGame
+	    are synchronous, the View [Model] considerations are rather 
+	    different.  Yet there is important need for separation.  One is
+	    that the View becomes separately testable.  In some sense this
+	    is lost in the collapsed VC, as it were, of PlayGame, although the
+	    testing of incomplete PlayGame is suggestive.  I am not clear that
+	    the View should directly access the model, even though it could.  If
+	    we were using interfaces, it might be more appropriate to have the
+	    View access an interface that is a bit more abstracted and constrained,
+	    although I have doubts about that.
+	       See <http://stackoverflow.com/a/3540895/33810> and also recognition
+	    that MVVM is a *pattern*, even though illustrated by a common usage,
+	    <https://msdn.microsoft.com/en-us/library/hh848246.aspx>.  So is MVC,
+	    although some treatments are too tied to a particular implementation
+	    case, as at <https://msdn.microsoft.com/en-us/library/ff649643.aspx>.
 		     
  
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
+ 0.0.5 2016-12-30-12:27 Tidy up to reflect the form as of the conclusion of
+       this developer's work on Section 02, ready for continuation to a 
+       deployable form.
  0.0.4 2016-12-29-09:18 Add deployment considerations to architecture, and
        look at some software-engineering architectural considerations too.
  0.0.3 2016-12-25-10:26 Reflect presence on GitHub now.  Adjust some items,
