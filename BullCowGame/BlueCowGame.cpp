@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.14             UTF-8                       2016-12-29 */
+/* BlueCowGame.cpp 0.0.15             UTF-8                       2017-01-01 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 /*                    BULLS AND COWS CONSOLE PROGRAM
@@ -41,8 +41,10 @@ void IntroduceGame(FBullCowGame NewGame)
         << "\nWelcome to Bulls and Cows, a fun word game.\n"
         "Guess a secret word having "
         << NewGame.WordSize()
-        << " letters, all different.\n";
-    // TODO: Also indicate the number of tries allowed.
+        << " letters, all different.\n"
+        << "Can you get it within "
+        << NewGame.SuggestedMaxTries()
+        << " tries?\n";
     // TODO: Split Welcome to the program from each game starting.
     return;
 }
@@ -165,8 +167,8 @@ void PlayGame(FBullCowGame CurrentGame)
              */
 
         // INVITE ANOTHER TRY
-        //           " Your guess? "
-        std::cout << " Next guess? ";
+        //             " Your guess? "
+        std::cout << "\n Next guess? ";
     }
 
 }
@@ -175,22 +177,41 @@ void PlayGame(FBullCowGame CurrentGame)
 
 /* TODO:
      * Make a README.md for the GitHub folks
+
      * Consider letting the student choose the maximum number of letters,
        based on what there is in a directory of word choices.
+
      * NOT DOING NOW: A big hashtable dictionary which is randomly probed to
        get qualifying words.  I bet I can use the hash algorithm from Adv10.
-       Then I need to get/make a dictionary of isograms.
-     * Switch to Release Builds and use static libraries.
+
+     * Get/Make a dictionary of isograms.
+
+     * Use static libraries.
+
      * See what the compiling of functions is all about and how that impacts
        build-time and also code footprint.
+
      * Turn off symbols too, since not going to use on-line crash reporting.
+
      * Move the view process into a separate class so that PlayGame() is
        more compact and the fussing with input-output is consolidated in
        one class.
+
+     * Switch from a Solution02 project to a fork with a name that works for
+       continuation as an nfoWare open-source activity and deployment structure.
+     * I will need to resolve some things between Visual Studio projects and 
+       command-line building.  
+
+     * This is definitely a C++ solution and that needs to be taken into account.
+       It might be made into a hybrid, using COM interfaces, but that doesn't
+       seem all that appropriate for this game.
+
+     * Evolve the game code to one that works in conjunction with a solver.
      */
 
 
-/* 0.0.14 2016-12-29-09:40 Expand the Pseudocode to give more guidance through 
+/* 0.0.15 2017-01-01-08:51 Touch up outputs, prepare to freeze a branch.
+   0.0.14 2016-12-29-09:40 Expand the Pseudocode to give more guidance through 
           PlayGame(), per Lecture 30.  Advance TODOs
    0.0.13 2016-12-24-14:30 Fix the PlayGame() loop to ask for "Next guess?" after 
           the first, other sprucing up.
