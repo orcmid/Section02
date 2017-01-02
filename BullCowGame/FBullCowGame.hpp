@@ -1,5 +1,5 @@
 #pragma once
-/* BlueCowGame.hpp 0.0.8             UTF-8                        2016-12-29 */
+/* BlueCowGame.hpp 0.0.9             UTF-8                        2017-01-02 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <string>
@@ -62,7 +62,7 @@ public:
            IsGoodIsogram() was true.   
            */
 
-    unsigned SuggestedMaxTries() const;
+    unsigned MaxTries() const;
         /* the number of tries suggested as a limit for the 
            current SecretWord */
         /* TODO: Over-ride with a constructor parameter?
@@ -73,8 +73,8 @@ public:
 private:
     std::string MySecret;
     std::string MyCurrentGuess;
-    unsigned MyWellFormedTries;
-    unsigned MySuggestedMaxTries;
+    unsigned MyGoodTries;
+    unsigned MyMaxTries;
         /* TODO: Completely hide this implementation info 
                  from the interface and contract?
                  */
@@ -84,11 +84,12 @@ private:
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 /* TODO:
-     * Change SuggestedMaxTries() to MaxTries() and add optional max parameter
-       to the constructor cases. 
+     * Add optional MaxTries parameter to the constructor cases. 
        */
 
-/* 0.0.8 2016-12-29-09:32 Touch up line-lengths to avoid word wrapping at
+/* 0.0.9 2017-01-02-12:56 Change ::SuggestedMaxTries() to ::MaxTries,
+         simplify to MyGoodTries and MyMaxTries in the state.
+   0.0.8 2016-12-29-09:32 Touch up line-lengths to avoid word wrapping at
          the ruler setting.  Add TODO.
    0.0.7 2016-12-25-07:53 Reflect that the handling of SecretWord and 
          CurrentGuess is case-insensitive, allowing players to use 

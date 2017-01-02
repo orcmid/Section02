@@ -1,4 +1,4 @@
-Section02-BullCow-GDD.txt 0.0.6       UTF-8                         2017-01-02
+Section02-BullCow-GDD.txt 0.0.7       UTF-8                         2017-01-02
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
         <https://github.com/orcmid/Section02>\Section02-BullCow-GDD.txt
@@ -260,8 +260,6 @@ TODO:
   * Find a better name for the forked version.  It will not be project 
     Section02 but it needs decent solution, project and .exe names.  It 
     would be cool to have it be an isogram.
-    
-  * Change the FBullCowGame::SuggestedMaxTries() to ::MaxTries.
   
   * Implement the second constructor to set MaxTries by the caller.
   
@@ -273,6 +271,7 @@ TODO:
     
 /* ------1---------2---------3---------4---------5---------6---------7------ */    
 
+ 0.0.7 2017-01-02-13:07 Implement TODO on change to ::MaxTries().
  0.0.6 2017-01-02-12:46 Start TODOs for 0.1.0 completion with a frozen branch,
        after wrap-up adjustments.
  0.0.5 2016-12-30-12:27 Tidy up to reflect the form as of the conclusion of

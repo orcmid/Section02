@@ -1,4 +1,4 @@
-/* FBullCowGame.cpp 0.0.7            UTF-8                        2016-12-25 */
+/* FBullCowGame.cpp 0.0.8            UTF-8                        2017-01-02 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 
@@ -22,8 +22,8 @@ FBullCowGame::FBullCowGame(std::string SecretWord)
         MySecret = std::string("");
 
     MyCurrentGuess = std::string("");
-    MyWellFormedTries = 0;
-    MySuggestedMaxTries = 5;
+    MyGoodTries = 0;
+    MyMaxTries = 5;
         /* TODO: Find a better way to estimate this based
                  on SecretWord.length() without giving 
                  anything away about complexity. */
@@ -34,7 +34,7 @@ unsigned FBullCowGame::WordSize() const { return MySecret.length(); }
 void FBullCowGame::SetGuess(std::string Guess)
 {
     MyCurrentGuess = Guess;
-    if (IsGoodIsogram()) MyWellFormedTries++;
+    if (IsGoodIsogram()) MyGoodTries++;
 }
 
 std::string FBullCowGame::CurrentGuess() const { return MyCurrentGuess; }
@@ -63,7 +63,7 @@ bool FBullCowGame::IsGoodIsogram() const
             and CurrentGuess be known English words. It only
             deals with spelling, not recognition or even
             pronuncibility of the word.  This is an advantage
-            in mechanical guessing heuristics.
+            in mechanical guessing heuristics but not awesome.
             */
 
     if (!IsCorrectLength()) return false;
@@ -113,15 +113,17 @@ unsigned FBullCowGame::Cows() const
     return MyCows - Bulls();
 }
 
-unsigned FBullCowGame::GoodTries() const { return MyWellFormedTries; }
+unsigned FBullCowGame::GoodTries() const { return MyGoodTries; }
 
-unsigned FBullCowGame::SuggestedMaxTries() const 
-    { return MySuggestedMaxTries; }
+unsigned FBullCowGame::MaxTries() const 
+    { return MyMaxTries; }
 
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.7 2016-12-25-08:17 Use case-insensitive checking of SecretWord and 
+/* 0.0.8 2017-01-02-13:02 Rename ::SuggestedMaxTries() to ::MaxTries()
+         and have MyGoodTries and MyMaxTries as state variables.
+   0.0.7 2016-12-25-08:17 Use case-insensitive checking of SecretWord and 
          CurrentGuess.  Adjust formatting and tighten comments and identfication
          of edge cases. 
    0.0.6 2016-12-24-13:45 Set const on all methods except SetGuess().

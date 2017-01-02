@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.15             UTF-8                       2017-01-01 */
+/* BlueCowGame.cpp 0.0.16             UTF-8                       2017-01-02 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 /*                    BULLS AND COWS CONSOLE PROGRAM
@@ -43,7 +43,7 @@ void IntroduceGame(FBullCowGame NewGame)
         << NewGame.WordSize()
         << " letters, all different.\n"
         << "Can you get it within "
-        << NewGame.SuggestedMaxTries()
+        << NewGame.MaxTries()
         << " tries?\n";
     // TODO: Split Welcome to the program from each game starting.
     return;
@@ -131,7 +131,7 @@ void PlayGame(FBullCowGame CurrentGame)
                           << "Bulls: " << CurrentGame.Bulls()
                           << " Cows: " << CurrentGame.Cows() 
                           << " Tries: " << CurrentGame.GoodTries()
-                          << "/" << CurrentGame.SuggestedMaxTries()
+                          << "/" << CurrentGame.MaxTries()
                           << std::endl;
             }
 
@@ -150,11 +150,11 @@ void PlayGame(FBullCowGame CurrentGame)
             }
 
             //  REPORT AND END WHEN THE THERE ARE NO MORE TRIES AVAILALBE
-            if (CurrentGame.SuggestedMaxTries() <= CurrentGame.GoodTries())
+            if (CurrentGame.MaxTries() <= CurrentGame.GoodTries())
             {
                 //             " Your guess? "
                 std::cout << "\n      SORRY! " << WordSpace
-                          << CurrentGame.SuggestedMaxTries()
+                          << CurrentGame.MaxTries()
                           << "-guess allowance exhausted.\n\n";
 
                 return;
@@ -209,8 +209,10 @@ void PlayGame(FBullCowGame CurrentGame)
      * Evolve the game code to one that works in conjunction with a solver.
      */
 
+/* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.15 2017-01-01-08:51 Touch up outputs, prepare to freeze a branch.
+/* 0.0.16 2017-01-02-12:51 Change ::SuggestedMaxTries() to ::MaxTries().
+   0.0.15 2017-01-01-08:51 Touch up outputs, prepare to freeze a branch.
    0.0.14 2016-12-29-09:40 Expand the Pseudocode to give more guidance through 
           PlayGame(), per Lecture 30.  Advance TODOs
    0.0.13 2016-12-24-14:30 Fix the PlayGame() loop to ask for "Next guess?" after 
