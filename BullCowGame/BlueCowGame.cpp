@@ -1,4 +1,4 @@
-/* BlueCowGame.cpp 0.0.16             UTF-8                       2017-01-02 */
+/* BlueCowGame.cpp 0.0.17             UTF-8                       2017-01-02 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 /*                    BULLS AND COWS CONSOLE PROGRAM
@@ -24,7 +24,7 @@ int main()
     //TODO: Let it specify the suggested indent underneath.
     do  
     {
-        FBullCowGame PlayerGame("isogram"); 
+        FBullCowGame PlayerGame("isogram", 12); 
             // TODO: Eventually randomized choice
             // TODO: Check against improper SecretWord
          IntroduceGame(PlayerGame);
@@ -211,7 +211,8 @@ void PlayGame(FBullCowGame CurrentGame)
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.16 2017-01-02-12:51 Change ::SuggestedMaxTries() to ::MaxTries().
+/* 0.0.17 2017-01-02-13:26 Use FBullCowGame(SecretWord, MaxTries) constructor.
+   0.0.16 2017-01-02-12:51 Change ::SuggestedMaxTries() to ::MaxTries().
    0.0.15 2017-01-01-08:51 Touch up outputs, prepare to freeze a branch.
    0.0.14 2016-12-29-09:40 Expand the Pseudocode to give more guidance through 
           PlayGame(), per Lecture 30.  Advance TODOs

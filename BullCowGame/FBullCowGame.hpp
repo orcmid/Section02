@@ -1,5 +1,5 @@
 #pragma once
-/* BlueCowGame.hpp 0.0.9             UTF-8                        2017-01-02 */
+/* BlueCowGame.hpp 0.0.10            UTF-8                        2017-01-02 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 #include <string>
@@ -16,6 +16,9 @@ public:
            matter.  If the SecretWord is not an isogram, it is set 
            to "" so that WordSize() == 0 and all guesses will fail.
            */
+
+    FBullCowGame(std::string SecretWord, unsigned MaxTries);
+        /* Also specify MaxTries */
 
     unsigned WordSize() const;
         /* The size of the SecretWord.  
@@ -65,10 +68,6 @@ public:
     unsigned MaxTries() const;
         /* the number of tries suggested as a limit for the 
            current SecretWord */
-        /* TODO: Over-ride with a constructor parameter?
-                 Estimate from SecretWord.length()?
-                 */
-
 
 private:
     std::string MySecret;
@@ -83,11 +82,9 @@ private:
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* TODO:
-     * Add optional MaxTries parameter to the constructor cases. 
-       */
 
-/* 0.0.9 2017-01-02-12:56 Change ::SuggestedMaxTries() to ::MaxTries,
+/* 0.0.10 2017-01-02-13:35 Add optional MaxTries constructor case.
+   0.0.9 2017-01-02-12:56 Change ::SuggestedMaxTries() to ::MaxTries,
          simplify to MyGoodTries and MyMaxTries in the state.
    0.0.8 2016-12-29-09:32 Touch up line-lengths to avoid word wrapping at
          the ruler setting.  Add TODO.

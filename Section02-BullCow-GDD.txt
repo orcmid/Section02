@@ -1,4 +1,4 @@
-Section02-BullCow-GDD.txt 0.0.7       UTF-8                         2017-01-02
+Section02-BullCow-GDD.txt 0.0.8       UTF-8                         2017-01-02
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
         <https://github.com/orcmid/Section02>\Section02-BullCow-GDD.txt
@@ -261,8 +261,6 @@ TODO:
     Section02 but it needs decent solution, project and .exe names.  It 
     would be cool to have it be an isogram.
   
-  * Implement the second constructor to set MaxTries by the caller.
-  
   * Create a separated view class.  It somehow does not need to see the
     whole model, but it needs some access in order to form messages properly.
     Should it do that, should its methods receive parameters, or should it have
@@ -271,6 +269,7 @@ TODO:
     
 /* ------1---------2---------3---------4---------5---------6---------7------ */    
 
+ 0.0.8 2017-01-02-13:35 Implement TODO to add MaxTries constructor parameter.
  0.0.7 2017-01-02-13:07 Implement TODO on change to ::MaxTries().
  0.0.6 2017-01-02-12:46 Start TODOs for 0.1.0 completion with a frozen branch,
        after wrap-up adjustments.

@@ -1,4 +1,4 @@
-/* FBullCowGame.cpp 0.0.8            UTF-8                        2017-01-02 */
+/* FBullCowGame.cpp 0.0.9            UTF-8                        2017-01-02 */
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
 
@@ -27,6 +27,12 @@ FBullCowGame::FBullCowGame(std::string SecretWord)
         /* TODO: Find a better way to estimate this based
                  on SecretWord.length() without giving 
                  anything away about complexity. */
+}
+
+FBullCowGame::FBullCowGame(std::string SecretWord, unsigned MaxTries)
+    : FBullCowGame(SecretWord)
+{
+    MyMaxTries = MaxTries;
 }
 
 unsigned FBullCowGame::WordSize() const { return MySecret.length(); }
@@ -121,7 +127,8 @@ unsigned FBullCowGame::MaxTries() const
 
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
-/* 0.0.8 2017-01-02-13:02 Rename ::SuggestedMaxTries() to ::MaxTries()
+/* 0.0.9 2017-01-02-13:24 Add FBullCowGame(SecretWord, MaxTries) constructor.
+   0.0.8 2017-01-02-13:02 Rename ::SuggestedMaxTries() to ::MaxTries()
          and have MyGoodTries and MyMaxTries as state variables.
    0.0.7 2016-12-25-08:17 Use case-insensitive checking of SecretWord and 
          CurrentGuess.  Adjust formatting and tighten comments and identfication
