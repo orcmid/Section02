@@ -1,4 +1,4 @@
-Section02-BullCow-GDD.txt 0.0.5       UTF-8                         2016-12-30
+Section02-BullCow-GDD.txt 0.0.6       UTF-8                         2017-01-02
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
         <https://github.com/orcmid/Section02>\Section02-BullCow-GDD.txt
@@ -247,6 +247,34 @@ Section02-BullCow-GDD.txt 0.0.5       UTF-8                         2016-12-30
  
 /* ------1---------2---------3---------4---------5---------6---------7------ */
 
+TODO:
+
+  * Touch up the completed version enough so that it can become a frozen 0.1.0
+    branch prior to forking this into an nfoTools-based command-line project.
+    
+  * AFTER freezing the 0.1.0 branch, change the project structure to use a 
+    src/ and dev/ split and put the VS project in the dev/ tree.  Challenges
+    and experiments/sandboxes for all of that will come post 0.1.0, including
+    all of the desired customizations.
+    
+  * Find a better name for the forked version.  It will not be project 
+    Section02 but it needs decent solution, project and .exe names.  It 
+    would be cool to have it be an isogram.
+    
+  * Change the FBullCowGame::SuggestedMaxTries() to ::MaxTries.
+  
+  * Implement the second constructor to set MaxTries by the caller.
+  
+  * Create a separated view class.  It somehow does not need to see the
+    whole model, but it needs some access in order to form messages properly.
+    Should it do that, should its methods receive parameters, or should it have
+    a restricted view of the model?  Figure this out.  We want minimal coupling,
+    but perhaps quite a bit more than none.
+    
+/* ------1---------2---------3---------4---------5---------6---------7------ */    
+
+ 0.0.6 2017-01-02-12:46 Start TODOs for 0.1.0 completion with a frozen branch,
+       after wrap-up adjustments.
  0.0.5 2016-12-30-12:27 Tidy up to reflect the form as of the conclusion of
        this developer's work on Section 02, ready for continuation to a 
        deployable form.
